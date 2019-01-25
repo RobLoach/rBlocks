@@ -537,19 +537,18 @@ void DrawScore(){
 	int ScoreTop = (NEXTPIECETOP+6)*TILESIZE+10;
 	// Score
 	SFont_Write(SDLWrapper.screen, Font, TILESIZE*13-18,ScoreTop,"Score");
-	char buff[20];
-	itoa(score, buff, 10);
-	SFont_Write(SDLWrapper.screen, Font, SDLWrapper.screenWidth()-SFont_TextWidth(Font,buff) - 5,ScoreTop+31,buff);
+	std::string scorestr = std::to_string(score);
+	SFont_Write(SDLWrapper.screen, Font, SDLWrapper.screenWidth()-SFont_TextWidth(Font, scorestr.c_str()) - 5,ScoreTop+31, scorestr.c_str());
 
 	// Level
 	SFont_Write(SDLWrapper.screen, Font, TILESIZE*13-12,ScoreTop+93,"Level");
-	itoa(level, buff, 10);
-    SFont_Write(SDLWrapper.screen, Font, SDLWrapper.screenWidth()-SFont_TextWidth(Font,buff) - 5,ScoreTop+124,buff);
+	std::string levelstr = std::to_string(level);
+    SFont_Write(SDLWrapper.screen, Font, SDLWrapper.screenWidth()-SFont_TextWidth(Font, levelstr.c_str()) - 5,ScoreTop+124, levelstr.c_str());
 
 	// Lines
 	SFont_Write(SDLWrapper.screen, Font, TILESIZE*13-12,ScoreTop+186,"Lines");
-	itoa(linesCleared, buff, 10);
-    SFont_Write(SDLWrapper.screen, Font, SDLWrapper.screenWidth()-SFont_TextWidth(Font,buff) - 5,ScoreTop+217,buff);
+	std::string linesClearedstr = std::to_string(linesCleared);
+    SFont_Write(SDLWrapper.screen, Font, SDLWrapper.screenWidth()-SFont_TextWidth(Font, linesClearedstr.c_str()) - 5,ScoreTop+217, linesClearedstr.c_str());
 
 }
 
@@ -658,14 +657,12 @@ void WriteFile(){
         fprintf(stderr, "An error occurred while trying to open score.dat\n");
         return;
     }
-	char buff[20];
-	//itoa(score, buff, 10);
 	std::string text = "rBlocks-";
-	text.append(itoa(score,buff,10));
+	text.append(std::to_string(score));
 	text.append("-");
-	text.append(itoa(level,buff,10));
+	text.append(std::to_string(level));
 	text.append("-");
-	text.append(itoa(linesCleared,buff,10));
+	text.append(std::to_string(linesCleared));
 	std::string key = "key";
 	std::string result = Xor(text, key);
 	fileOutput << result;
